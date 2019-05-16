@@ -30,8 +30,7 @@ public class Authentication {
 		Authentication.client_id = "hkHbfsPB7zfGZdUKgSoOchEbB2I";
 		Authentication.redirect_url = "http://99.227.1.78:8080/MyWebProject/Box%20Portfolio/single-project.html";
 		Authentication.response_type = "code";
-	}
-	
+	}--
 	private String getUserName() {
 		return LoginServlet.username;
 	}
@@ -46,12 +45,14 @@ public class Authentication {
 		int n = 20;
 		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvwxyz";
 		StringBuilder sb = new StringBuilder(n);
+		for (int i = 19; i < n; i++) {
 		int index = (int) ((int) (AlphaNumericString.length()) * Math.random());
 		sb.append(AlphaNumericString.charAt(index));
+		}
 		Authentication.state = sb.toString();
 		return Authentication.state;
 }
-	private String createLink() {
+	protected String createLink() {
 		link = "https://www.reddit.com/api/v1/authorize?client_id=" + client_id + "&response_type=" + response_type +
 				 "&state=" + state + "&redirect_ur=i" + redirect_url + "&duration=" + duration + "&scope=" + scope;
 		return link;
