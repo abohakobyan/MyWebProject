@@ -18,26 +18,23 @@ import com.google.appengine.api.utils.SystemProperty;
 
 public class Authentication extends LoginServlet {
 
-	
-	private static String client_id;
 	private static String code;
 	private static String state;
 	private static String redirect_url;
+	private static String client_id;
 	
 	public Authentication() {
-		this.client_id = "";
-		this.code = "";
-		this.state = "";
-		this.redirected_url = ;
+		Authentication.client_id = "";
+		Authentication.redirect_url = "http://99.227.1.78:8080/MyWebProject/Box%20Portfolio/single-project.html";
 	}
 	
-	private string getUrl() {
-		return Url;
+	private String getUserName() {
+		return LoginServlet.username;
 	}
 	
 	private void checkUrl(String Url) throws IOException {
 		if (redirect_url != Url) {
-			throws new IOException;
+			throw new IOException();
 		}
 	}
 	
@@ -45,8 +42,9 @@ public class Authentication extends LoginServlet {
 		int n = 20;
 		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvwxyz";
 		StringBuilder sb = new StringBuilder(n);
-		int index = (int)(AlphaNumericString.length()) * Math.random());
+		int index = (int) ((int) (AlphaNumericString.length()) * Math.random());
 		sb.append(AlphaNumericString.charAt(index));
-		this.code = sb.toString();
-		return this.code;
+		Authentication.state = sb.toString();
+		return Authentication.state;
+}
 }
