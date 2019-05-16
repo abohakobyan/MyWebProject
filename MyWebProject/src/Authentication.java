@@ -43,7 +43,7 @@ public class Authentication extends HttpServlet {
 		Authentication.state = sb.toString();
 		
 }
-	protected String createLink() {
+	protected static String createLink() {
 		Authentication a = new Authentication();
 		a.stateChanges();
 		link = "https://www.reddit.com/api/v1/authorize?client_id=" + client_id + "&response_type=" + response_type +

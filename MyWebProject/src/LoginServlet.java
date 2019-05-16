@@ -26,7 +26,7 @@ public class LoginServlet extends Authentication{
             HttpServletResponse response) throws ServletException, IOException {
 		String l = Authentication.createLink();
 		System.out.println(l);
-		response.setContentType("text/html");  
+		response.setContentType("text/html");
 		PrintWriter pw=response.getWriter();  
 		  
 		response.sendRedirect(l);  
