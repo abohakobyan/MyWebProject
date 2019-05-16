@@ -18,12 +18,19 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
- 
-    	String number = request.getParameter("ND_DP");
-    	System.out.println("number: " + number);
+		
+		PrintWriter writer = response.getWriter();
+		
+		
+    	String username = request.getParameter("username");
+    	String password = request.getParameter("password");
+    	if(username != "" && password != "") {
+    		writer.println("You Have Been Authenticated!");
+    	}else {
+    		writer.println("Please enter a valid username and password!");
+    	}
     	
-    	PrintWriter writer = response.getWriter();
-    	writer.println("there are korean bous");
+    	
     }
  
 }

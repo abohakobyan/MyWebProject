@@ -7,31 +7,31 @@
 <body>
  
 
-      <h1>Input a number. It will be standardized and reversed.</h1>
+      <h1>Enter Your Reddit Credentials</h1>
 
       <form method="post" action="LoginServlet">
 	<table>
-<tbody>
-<tr><td><label>Enter a number (format : 999999.9999) : </label></td> 
-               <td><input name="UN" type="text" size="10"/></td> 
+		<tbody>
+			<tr>
+				<td>
+				<label> Username :  </label>
+				</td>  
+               	<td>
+               	<input name="username" type="text" size="25"/></td> 
             </tr>
-<tr><td><label>Standardized number of digits in the decimal part : </label></td> 
-               <td> <select name="ND_DP">
-  		<option value="1">1</option>
-  		<option value="2">2</option>
-  		<option value="3">3</option>
-  			</select>	</td> 
-           </tr>
-</tbody>
+			<tr>
+				<td>
+				<label> Password :  </label>
+				</td>  
+               	<td>
+               	<input name="password" type="password" size="25"/></td> 
+            </tr>
+		</tbody>
 	</table>
-         <p>
-            
+         
+  		<p>    
 	<input type="submit" class="button" name="submit"/>
-            
-     
-         </p>
+   		</p>
       </form>
-	 
-	  
  </body>
 </html>
