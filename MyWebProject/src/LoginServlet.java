@@ -9,20 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends Authentication {
  
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	protected static String username;
 
+
+	
 	protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 		
 		PrintWriter writer = response.getWriter();
 		
 		
-    	String username = request.getParameter("username");
+    	username = request.getParameter("username");
     	String password = request.getParameter("password");
     	if(username != "" && password != "") {
     		writer.println("You Have Been Authenticated!");
@@ -30,7 +33,5 @@ public class LoginServlet extends HttpServlet {
     		writer.println("Please enter a valid username and password!");
     	}
     	
-    	
-    }
- 
+
 }
