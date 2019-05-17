@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -14,6 +15,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import jdk.internal.org.xml.sax.InputSource;
+import net.projectmonkey.object.mapper.ObjectMapper;
+
 import java.io.*;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -22,6 +32,8 @@ import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -29,7 +41,7 @@ import java.util.List;
 
 @WebServlet("/Verify")
 public class Verify extends HttpServlet{
-	private final static String USER_AGENT = "Mozilla/5.0";
+	private final static String USER_AGENT = "Reposter:v0.2";
  
     /**
 	 * 
@@ -81,9 +93,10 @@ public class Verify extends HttpServlet{
 
 		//add reuqest header
 		con.setRequestMethod("POST");
+		String encoded = Base64.getEncoder().encodeToString(("iyn_zN-dKNdmrw"+":"+"hkHbfsPB7zfGZdUKgSoOchEbB2I").getBytes(StandardCharsets.UTF_8));  //Java 8
+		con.setRequestProperty("Authorization", "Basic "+encoded);
 		con.setRequestProperty("User-Agent", USER_AGENT);
-		con.setRequestProperty("user", "iyn_zN-dKNdmrw");
-		con.setRequestProperty("password", "hkHbfsPB7zfGZdUKgSoOchEbB2I");
+		
 		//con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
 		String urlParameters = "grant_type=authorization_code&code="+code+"&redirect_uri=http://99.227.1.78:8080/MyWebProject/Verify";
@@ -99,19 +112,29 @@ public class Verify extends HttpServlet{
 		System.out.println("\nSending 'POST' request to URL : " + url);
 		System.out.println("Post parameters : " + urlParameters);
 		System.out.println("Response Code : " + responseCode);
-
+		InputStream input = con.getInputStream();
 		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
+		        new InputStreamReader(input));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
 
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
+		input.close();
 		in.close();
-		
-		//print result
-		System.out.println(response.toString());
-
+		String x = response.toString();
+		System.out.print(x);
+		String [] value1= x.split(",");
+		String [] value2= value1[0].split(":");
+		String token = value2[1].trim().replace("\"" , "");
+		System.out.print(token);
+		readArticles(token);
 	}
+	
+	public static void readArticles(String token) {
+		   
+		
+	}
+
 }

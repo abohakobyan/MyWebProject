@@ -9,5 +9,10 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="java-json.jar"/>
+	<classpathentry kind="lib" path="object-mapper-0.2.1.jar"/>
+	<classpathentry kind="lib" path="htmlparser.jar"/>
+	<classpathentry kind="lib" path="jsoup-1.12.1.jar"/>
+	<classpathentry kind="lib" path="apm-resttemplate-4.3.x-plugin-6.1.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
