@@ -17,9 +17,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
 import jdk.internal.org.xml.sax.InputSource;
 import net.projectmonkey.object.mapper.ObjectMapper;
@@ -49,9 +59,11 @@ public class Verify extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	protected static String state;
 	protected static String code;
-
+	public static final String OAUTH_API_DOMAIN = "https://oauth.reddit.com";
+	//public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport(); 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		      throws ServletException, IOException {
+		
 		 response.setContentType("text/html");
 		 
 		PrintWriter writer =response.getWriter();  
@@ -131,10 +143,56 @@ public class Verify extends HttpServlet{
 		System.out.print(token);
 		readArticles(token);
 	}
-	
-	public static void readArticles(String token) {
-		   
+	public static final String ENDPOINT_ID = OAUTH_API_DOMAIN + "/api/v1/me";
+    public static final String ENDPOINT_SUBS = OAUTH_API_DOMAIN + "/subreddits/mine/";  
+    
+    
+	public static void readArticles(String token) throws Exception {
+		
+		String url = ENDPOINT_ID;
+		URL obj = new URL(url);
+		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		System.out.print(token);
+		
+		con.setRequestProperty("Authorization", "bearer "+ token);
+		con.setRequestProperty("User-Agent", USER_AGENT);
+		
+		
+		//String urlParameters = "g=GLOBAL&after=t5_26624590&include_categories=false&limit=100";
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		//wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+		int responseCode = con.getResponseCode();
+		
+		System.out.println("\nSending 'Get' request to URL : " + url);
+		//System.out.println("Post parameters : " + urlParameters);
+		System.out.println("Response Code : " + responseCode);
+		
+		if(responseCode != 404) {
+		
+		InputStream input = con.getInputStream();
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(input));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		}else {
+			System.out.println("404Error");
+		}
 		
 	}
 
-}
+	
+		
+		
+		
+	}
+		
+	
+

@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="htmlparser.jar"/>
 	<classpathentry kind="lib" path="jsoup-1.12.1.jar"/>
 	<classpathentry kind="lib" path="apm-resttemplate-4.3.x-plugin-6.1.0.jar"/>
+	<classpathentry kind="lib" path="google-http-client-1.23.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
