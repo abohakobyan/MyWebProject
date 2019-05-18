@@ -33,6 +33,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 
 import jdk.internal.org.xml.sax.InputSource;
 import net.projectmonkey.object.mapper.ObjectMapper;
+import sun.rmi.runtime.Log;
 
 import java.io.*;
 
@@ -143,53 +144,54 @@ public class Verify extends HttpServlet{
 		System.out.print(token);
 		readArticles(token);
 	}
-	public static final String ENDPOINT_ID = OAUTH_API_DOMAIN + "/api/v1/me";
-    public static final String ENDPOINT_SUBS = OAUTH_API_DOMAIN + "/subreddits/mine/";  
+	
     
     
 	public static void readArticles(String token) throws Exception {
 		
-		String url = ENDPOINT_ID;
+		String url = "https://oauth.reddit.com/r/animemes/top/?t=all&limit=50";
 		URL obj = new URL(url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
 		System.out.print(token);
 		
 		con.setRequestProperty("Authorization", "bearer "+ token);
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		
+			
+		//String urlParameters = "user/abohakobyan/about.json";
 		
-		//String urlParameters = "g=GLOBAL&after=t5_26624590&include_categories=false&limit=100";
 		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		//DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 		//wr.writeBytes(urlParameters);
+		/*
 		wr.flush();
 		wr.close();
+		*/
 		int responseCode = con.getResponseCode();
 		
 		System.out.println("\nSending 'Get' request to URL : " + url);
 		//System.out.println("Post parameters : " + urlParameters);
 		System.out.println("Response Code : " + responseCode);
+		System.out.println();
 		
-		if(responseCode != 404) {
-		
-		InputStream input = con.getInputStream();
 		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(input));
+		        new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
 
 		while ((inputLine = in.readLine()) != null) {
+			System.out.println(inputLine);
+			System.out.println("\n");
 			response.append(inputLine);
 		}
-		}else {
-			System.out.println("404Error");
-		}
-		
-	}
+		in.close();
+
+		//print result
+		//System.out.println(response.toString());
 
 	
-		
+	}
 		
 		
 	}

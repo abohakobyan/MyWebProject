@@ -29,7 +29,7 @@ public class Authentication extends HttpServlet {
 		Authentication.client_id = "iyn_zN-dKNdmrw";
 		Authentication.redirect_url = "http://99.227.1.78:8080/MyWebProject/Verify";
 		Authentication.response_type = "code";
-		Authentication.scope = "history";
+		Authentication.scope = "read";
 		Authentication.duration = "temporary";
 	}
 	private void stateChanges() {
