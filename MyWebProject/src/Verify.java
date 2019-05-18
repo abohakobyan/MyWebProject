@@ -1,45 +1,21 @@
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-
-
-import jdk.internal.org.xml.sax.InputSource;
-import net.projectmonkey.object.mapper.ObjectMapper;
-import sun.rmi.runtime.Log;
-
+import org.json.JSONArray;
 import java.io.*;
-
 import javax.net.ssl.HttpsURLConnection;
-import javax.servlet.*;  
-import javax.servlet.http.*; 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
+
 
 
 
@@ -106,7 +82,7 @@ public class Verify extends HttpServlet{
 		
 		//con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-		String urlParameters = "grant_type=authorization_code&code="+code+"&redirect_uri=http://99.227.1.78:8080/MyWebProject/Verify";
+		String urlParameters = "grant_type=authorization_code&code="+code+"&redirect_uri=http://99.240.107.88:8080/MyWebProject/Verify";
 		
 		// Send post request
 		con.setDoOutput(true);
@@ -175,11 +151,36 @@ public class Verify extends HttpServlet{
 		StringBuffer response = new StringBuffer();
 
 		while ((inputLine = in.readLine()) != null) {
-			System.out.println(inputLine);
-			System.out.println("\n");
+			//System.out.println(inputLine);
+			//System.out.println("\n");
 			response.append(inputLine);
 		}
 		in.close();
+		
+		String a = response.toString();
+		/*System.out.println(a);
+		System.out.println("\n");*/
+		final JSONObject obj1 = new JSONObject(a);
+		System.out.println(a);
+		JSONObject datao = obj1.getJSONObject("data");
+		JSONArray childrena = datao.getJSONArray("children");
+		for(int i = 0; i < 25; i++) {
+			System.out.println(i+1);
+		JSONObject data = childrena.getJSONObject(i);
+		JSONObject data2 = data.getJSONObject("data");
+	    System.out.println(data2.getString("title"));
+	    System.out.println(data2.getString("url"));
+		}
+	    /*final JSONArray information = obj1.getJSONArray("Listing");
+	    final int n = information.length();
+	    for (int i = 0; i < n; ++i) {
+	      final JSONObject person = information.getJSONObject(i);
+	      System.out.println(person.getString("url"));
+	      System.out.println(person.getString("description"));*/
+		/*JSONParser parse = new JSONParser(a, null, false);
+		JSONArray array = (JSONArray) (((JSONObject) parse.parse()).get("data")).get("Listing");*/
+		
+		
 
 		//print result
 		//System.out.println(response.toString());
@@ -189,6 +190,8 @@ public class Verify extends HttpServlet{
 		
 		
 	}
+
+
 		
 	
 

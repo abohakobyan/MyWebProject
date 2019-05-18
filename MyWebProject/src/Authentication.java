@@ -1,25 +1,14 @@
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;  
-import javax.servlet.*;  
-import javax.servlet.http.*; 
+ 
 public class Authentication extends HttpServlet {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	protected static final long serialVersionUID = 1L;
+	private static String redirect_url = "http://99.240.107.88:8080/MyWebProject/Verify";
 	private static String response_type;
 	private static String state;
-	private static String redirect_url;
 	private static String client_id;
 	private static String link;
 	private static String duration;
@@ -27,12 +16,11 @@ public class Authentication extends HttpServlet {
 	
 	public Authentication() {
 		Authentication.client_id = "iyn_zN-dKNdmrw";
-		Authentication.redirect_url = "http://99.227.1.78:8080/MyWebProject/Verify";
 		Authentication.response_type = "code";
 		Authentication.scope = "read";
 		Authentication.duration = "temporary";
 	}
-	private void stateChanges() {
+	private void generateState() {
 		int n = 20;
 		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvwxyz";
 		StringBuilder sb = new StringBuilder(n);
@@ -45,7 +33,7 @@ public class Authentication extends HttpServlet {
 }
 	protected static String createLink() {
 		Authentication a = new Authentication();
-		a.stateChanges();
+		a.generateState();
 		link = "https://www.reddit.com/api/v1/authorize?client_id=" + client_id + "&response_type=" + response_type +
 				 "&state=" + state + "&redirect_uri=" + redirect_url + "&duration=" + duration + "&scope=" + scope;
 		return link;
