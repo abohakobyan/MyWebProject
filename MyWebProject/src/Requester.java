@@ -28,7 +28,6 @@ public class Requester extends Authentication{
 			wr.flush();
 			wr.close();
 		}
-		
 		try{
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
