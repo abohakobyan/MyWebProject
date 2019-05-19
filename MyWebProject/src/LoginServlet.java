@@ -17,14 +17,17 @@ public class LoginServlet extends Authentication{
 	
 	protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-		String l = Authentication.createLink();
-		System.out.println(l);
-		response.setContentType("text/html");
-		PrintWriter pw=response.getWriter();  
-		  
-		response.sendRedirect(l);  
-		  
-		pw.close();  
+			String l = Authentication.createLink();
+				System.out.println(l);
+				response.setContentType("text/html");
+				PrintWriter pw=response.getWriter();  
+				  
+				response.sendRedirect(l);  
+				  
+				pw.close();
+
+		}	
+		 
 		
 		
 		/*
@@ -37,4 +40,3 @@ public class LoginServlet extends Authentication{
     	}
     	*/
 	}
-}

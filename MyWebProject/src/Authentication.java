@@ -1,12 +1,19 @@
 import javax.servlet.http.HttpServlet;
  
 public class Authentication extends HttpServlet {
-
+	protected final static String USER_AGENT = "Reposter:v0.2";
+	protected static String code;
+	protected final static int NUM_POSTS = 100;
+	public static final String OAUTH_API_DOMAIN = "https://oauth.reddit.com";
 	/**
 	 * 
 	 */
 	protected static final long serialVersionUID = 1L;
-	private static String redirect_url = "http://99.240.107.88:8080/MyWebProject/Verify";
+	
+	protected static final String redirect_url = "http://99.227.1.78:8080/MyWebProject/Verify";
+	protected static final String access_url = "https://www.reddit.com/api/v1/access_token";
+	protected static final String SECRET = "hkHbfsPB7zfGZdUKgSoOchEbB2I";
+	
 	private static String response_type;
 	private static String state;
 	private static String client_id;
