@@ -1,23 +1,12 @@
 import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
-
 import java.io.*;
-import javax.net.ssl.HttpsURLConnection;
 import java.util.Base64;
-
-
-
-
 
 
 @SuppressWarnings("serial")
@@ -54,37 +43,13 @@ public class Verify extends Authentication{
 		readArticles(token);
 	}
 	
-    
-    
-	
 	public static void readArticles(String token) throws Exception {
-		
+		String parameters = null;
 		String url = "https://oauth.reddit.com/r/animemes/top/?t=all&limit=" +  NUM_POSTS;
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("GET");
 		System.out.print(token);
-		
-		con.setRequestProperty("Authorization", "bearer "+ token);
-		con.setRequestProperty("User-Agent", USER_AGENT);
-		con.setDoOutput(true);
-		
-		try{
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-		
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-		
-		String a = response.toString();
+		String auth = "bearer "+ token;
+		String a = Requester.sendRequest(parameters, url, "GET", auth);
 		ParseHelper.printArray(ParseHelper.parsePosts(a, NUM_POSTS));
-		
-		}catch(IOException e) {
-			e.printStackTrace();
-		} 
 	}
 }
 

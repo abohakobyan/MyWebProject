@@ -8,10 +8,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONException;
 
+@SuppressWarnings("serial")
 public class Requester extends Authentication{
 	
-	
-	protected static String sendRequest(String parameter, String url, String method, String auth) 
+	static String sendRequest(String parameter, String url, String method, String auth) 
 			throws IOException, JSONException {
 		
 		URL obj = new URL(url);
@@ -38,10 +38,7 @@ public class Requester extends Authentication{
 				response.append(inputLine);
 			}
 			in.close();
-			
 			a = response.toString();
-			ParseHelper.printArray(ParseHelper.parsePosts(a, NUM_POSTS));
-			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
