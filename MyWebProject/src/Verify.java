@@ -42,44 +42,12 @@ public class Verify extends Authentication{
 	}
 	
 	private static void sendPost(String code) throws Exception {
-		
-		
-		URL obj = new URL(access_url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-		con.setRequestMethod("POST");
-		
-		String encoded = Base64.getEncoder().encodeToString(("iyn_zN-dKNdmrw"+":"+ SECRET).getBytes(StandardCharsets.UTF_8));  //Java 8
-		con.setRequestProperty("Authorization", "Basic "+encoded);
-		con.setRequestProperty("User-Agent", USER_AGENT);
-		
-		
 		String urlParameters = "grant_type=authorization_code&code="+code+"&redirect_uri="+ redirect_url;
+		String encoded = Base64.getEncoder().encodeToString(("iyn_zN-dKNdmrw"+":"+ SECRET).getBytes(StandardCharsets.UTF_8));
+		String auth = "Basic " + encoded;
+		String a = Requester.sendRequest(urlParameters, access_url, "POST", auth);
 		
-		// Send post request
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-		wr.close();
-
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + access_url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
-		
-		InputStream input = con.getInputStream();
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(input));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		input.close();
-		in.close();
-		String x = response.toString();
-		final JSONObject obj3 = new JSONObject(x);
+		final JSONObject obj3 = new JSONObject(a);
 		String token = obj3.getString("access_token");
 		//String scope  =  obj3.getString("scope");
 		
