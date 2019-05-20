@@ -46,9 +46,9 @@ public class Verify extends Authentication{
 	public static void readArticles(String token) throws Exception {
 		String parameters = null;
 		String url = null;
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 10; i++) {
 		if (i==0) {
-			url = "https://oauth.reddit.com/r/animemes/top/?t=all&limit=" +  NUM_POSTS;
+			url = "https://oauth.reddit.com/r/"+subReddit+"/top/?t=all&limit=" +  NUM_POSTS;
 		}	else {
 		url = "https://oauth.reddit.com/r/animemes/top/?t=all&limit=" +  NUM_POSTS + "&after=" + "t3_" + Algorithm.getLastPostID(); 
 		}
@@ -57,7 +57,7 @@ public class Verify extends Authentication{
 		String a = Requester.sendRequest(parameters, url, "GET", auth);
 		Algorithm.cleanUp(ParseHelper.parsePosts(a, NUM_POSTS));
 		}
-		Algorithm.suggest();
+		System.out.println(Algorithm.suggest());
 		}
 }
 
