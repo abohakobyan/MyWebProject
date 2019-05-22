@@ -7,12 +7,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import java.io.*;
 import java.util.Base64;
+import java.util.logging.Level;
+
 
 
 @SuppressWarnings("serial")
 @WebServlet("/Verify")
 public class Verify extends Authentication{
 	
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		      throws ServletException, IOException {
 		
@@ -20,11 +23,13 @@ public class Verify extends Authentication{
 		PrintWriter writer =response.getWriter();  
     	code = request.getParameter("code");
     	writer.println("Success _____  Redirecting");
-    	    
+    	Logging.logInitiation();
+    	
     	try {
 			sendPost(code);
 		} catch (Exception e) {
 			e.printStackTrace();
+			Logging.LOGGER.log(Level.SEVERE, "File logger not working.", e);
 		}
     	writer.close();  
     	
@@ -46,18 +51,21 @@ public class Verify extends Authentication{
 	public static void readArticles(String token) throws Exception {
 		String parameters = null;
 		String url = null;
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 2; i++) {
 		if (i==0) {
-			url = "https://oauth.reddit.com/r/"+subReddit+"/top/?t=all&limit=" +  NUM_POSTS;
+			url = "https://oauth.reddit.com/r/" + subReddit + "/top/?t=all&limit=" +  NUM_POSTS;
 		}	else {
-		url = "https://oauth.reddit.com/r/animemes/top/?t=all&limit=" +  NUM_POSTS + "&after=" + "t3_" + Algorithm.getLastPostID(); 
+		url = "https://oauth.reddit.com/r/" + subReddit + "/top/?t=all&limit=" +  NUM_POSTS + "&after=" + "t3_" + Algorithm.getLastPostID(); 
 		}
-		System.out.print(token);
 		String auth = "bearer "+ token;
 		String a = Requester.sendRequest(parameters, url, "GET", auth);
+		//System.out.println(a);
 		Algorithm.cleanUp(ParseHelper.parsePosts(a, NUM_POSTS));
 		}
+		//System.out.println(Requester.class.getClassLoader().getResource("logging.properties"));
 		System.out.println(Algorithm.suggest());
+		
+		
 		}
 }
 

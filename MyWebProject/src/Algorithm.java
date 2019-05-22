@@ -1,8 +1,8 @@
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 public class Algorithm extends Post{
@@ -15,7 +15,7 @@ public class Algorithm extends Post{
 		for (int i = 0; i < posts.length; i++) {
 			Date other = new Date((long)posts[i].created_utc*1000);
 			Date current = new Date((long)currenttime*1000);
-			if (posts[i].post_hint.equals("image") && compareDate(current,other)) {
+			if (compareDate(current, other)) {
 				np.add(posts[i]);
 			}
 		}
@@ -33,6 +33,11 @@ public class Algorithm extends Post{
 	public static long getDate() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()/1000);
 		return timestamp.getTime();
+	}
+	public static String getDateFormat() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
 	}
 	@SuppressWarnings("deprecation")
 	public static boolean compareDate(Date current, Date other) {

@@ -1,5 +1,6 @@
 import javax.servlet.http.HttpServlet;
- 
+
+
 public class Authentication extends HttpServlet {
 	protected final static String USER_AGENT = "Reposter:v0.2";
 	protected static String code;
@@ -9,10 +10,11 @@ public class Authentication extends HttpServlet {
 	 * 
 	 */
 	protected static final long serialVersionUID = 1L;
-	protected static String subReddit = "animemes";
-	protected static final String redirect_url = "http://99.227.1.78:8080/MyWebProject/Verify";
+	protected static String subReddit = "all";
+	protected static final String redirect_url = "http://99.240.107.88:8080/MyWebProject/Verify";
 	protected static final String access_url = "https://www.reddit.com/api/v1/access_token";
 	protected static final String SECRET = "hkHbfsPB7zfGZdUKgSoOchEbB2I";
+	
 	
 	private static String response_type;
 	private static String state;

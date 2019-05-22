@@ -5,12 +5,13 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
-
 import org.json.JSONException;
+
 
 @SuppressWarnings("serial")
 public class Requester extends Authentication{
 	
+	protected static String rec = null;
 	static String sendRequest(String parameter, String url, String method, String auth) 
 			throws IOException, JSONException {
 		
@@ -20,13 +21,13 @@ public class Requester extends Authentication{
 		con.setRequestProperty("Authorization", auth);
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		String a = null;
-		
 		if (method == "POST") {
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(parameter);
 			wr.flush();
 			wr.close();
+		}	else {
 		}
 		try{
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -41,8 +42,10 @@ public class Requester extends Authentication{
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
+		
+		rec = "Making " + method + " with " + parameter + " to " + url + " auth " + auth + ".";
+		Logging.logStr(rec);
 		return a; 
-		}
-
+	}
 }
 
