@@ -13,7 +13,6 @@ public class token {
 		}
 		//String scope  =  obj3.getString("scope");
 		
-		//readArticles(token);
 		return token;
 	}
 
