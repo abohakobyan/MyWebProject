@@ -14,24 +14,27 @@ import java.util.logging.Level;
 @SuppressWarnings("serial")
 @WebServlet("/Verify")
 public class Verify extends Authentication{
-	
-
+	public static  HttpServletResponse resp;
+	public static PrintWriter w;
+	public static String resUrl;
+	public static String resTitle;
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		      throws ServletException, IOException {
-		
-		response.setContentType("text/html");
-		PrintWriter writer =response.getWriter();  
+		resp = response;
+		resp.setContentType("text/html");
+		w = resp.getWriter();  
     	code = request.getParameter("code");
-    	writer.println("Success _____  Redirecting");
+    	//w.println("Success _____  Redirecting");
     	Logging.logInitiation();
     	
     	try {
 			sendPost(code);
+			Results.createHtml(resUrl, resTitle);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Logging.LOGGER.log(Level.SEVERE, "File logger not working.", e);
 		}
-    	writer.close();  
+    	w.close();  
     	
 	}
 	
@@ -63,8 +66,9 @@ public class Verify extends Authentication{
 		Algorithm.cleanUp(ParseHelper.parsePosts(a, NUM_POSTS));
 		}
 		//System.out.println(Requester.class.getClassLoader().getResource("logging.properties"));
-		System.out.println(Algorithm.suggest());
-		
+		Post resPost = Algorithm.suggest();
+		resUrl = resPost.url;
+		resTitle = resPost.title;
 		
 		}
 }
