@@ -4,6 +4,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.*;
 import java.util.Base64;
@@ -42,10 +44,10 @@ public class Verify extends Authentication{
 		String a = Requester.sendRequest(urlParameters, access_url, "POST", auth);
 		
 		final JSONObject obj3 = new JSONObject(a);
-		String token = obj3.getString("access_token");
+		token.tokenRetrieval(obj3);
 		//String scope  =  obj3.getString("scope");
 		
-		readArticles(token);
+		readArticles(token.tokenRetrieval(obj3));
 	}
 	
 	public static void readArticles(String token) throws Exception {
